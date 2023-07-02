@@ -1,6 +1,8 @@
 from model import Tamagotchi
 from view import Visual
 import tkinter as tk
+import os
+import threading
 
 
 window = tk.Tk()
@@ -40,9 +42,7 @@ hamburguer = tk.Label(food_frame, text=icons.food[0], font=("Courier", 1))
 cake = tk.Label(food_frame, text=icons.food[1], font=("Courier", 1))
 lasagna = tk.Label(food_frame, text=icons.food[2], font=("Courier", 1))
 
-option1 = tk.Button(
-    food_frame, text="Hamburguer", command=lambda: show_tamagotchi(option1["text"])
-)
+option1 = tk.Button(food_frame, text="Hamburguer", command=lambda: button1_click())
 option2 = tk.Button(
     food_frame, text="Cake", command=lambda: show_tamagotchi(option2["text"])
 )
@@ -91,6 +91,17 @@ def animate(index):
 
 
 animate(0)
+
+
+# Button function
+def play_alert_sound():
+    script = 'osascript -e "beep"'
+    os.system(script)
+
+
+def button1_click():
+    threading.Thread(target=play_alert_sound()).start()
+    threading.Thread(show_tamagotchi(option1["text"])).start()
 
 
 tamagotchi_frame.place(x=0, y=0, width=250, height=250)
